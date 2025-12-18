@@ -1,8 +1,11 @@
 package servicos;
 
+import entidades.Passageiro;
 import excecoes.PagamentoRecusadoException;
 import excecoes.SaldoInsuficienteException;
 
 public interface MetodoPagamento {
-    public boolean processarPagamento(double valor) throws SaldoInsuficienteException, PagamentoRecusadoException;
+    public void processarPagamento(double valor, Passageiro passageiro) throws SaldoInsuficienteException, PagamentoRecusadoException;
+
+    public String getTipoPagamento();
 }
