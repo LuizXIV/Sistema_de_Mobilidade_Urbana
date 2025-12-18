@@ -1,51 +1,32 @@
 package servicos;
 
-import java.util.Date;
+import entidades.Passageiro;
+import excecoes.PagamentoRecusadoException;
+import excecoes.SaldoInsuficienteException;
 
 public class CartaoCredito implements MetodoPagamento{
-    private String numeroCartao, nome, titular, cvv;
-    Date validade;
+    private String numeroCartao, bandeira, validade, cvv;
 
-
-
-
-    public CartaoCredito(String numeroCartao, String nome, String titular, String cvv, Date validade) {
-        this.setNumeroCartao(numeroCartao);
-        this.nome = nome;
-        this.titular = titular;
+    public CartaoCredito(String numeroCartao, String bandeira, String cvv, String validade) {
+        this.numeroCartao = numeroCartao;
+        this.bandeira = bandeira;
         this.cvv = cvv;
         this.validade = validade;
 
     }
 
-
-    public String setNome() {return nome;}
-
-    public String setTitular() {return titular;}
-
-    public String setCvv() {return cvv;}
-
-    public Date setValidade() {return validade;}
-
-
-    public void getNome() {
+    @Override
+    public void processarPagamento(double valor, Passageiro passageiro)
+            throws SaldoInsuficienteException, PagamentoRecusadoException {
+        if (numeroCartao == null || numeroCartao.isEmpty() || cvv == null || cvv.isEmpty() || bandeira == null || bandeira.isEmpty() || validade == null || validade.isEmpty()) {
+            throw new PagamentoRecusadoException("Dados do cartão inválidos.");
+        }
+        System.out.println("Pagamento via Cartão de Crédito de R$ " + valor + " processado com sucesso");
     }
-    public void getTitular() {
-
-    }
-    public void getCvv() {
-
-    }
-    public void getValidade() {
-
-    }
-
-
 
     @Override
-    public boolean processarPagamento(double valor) {
-        return true;
+    public String getTipoPagamento() {
+        return "Cartão de Crédito";
     }
 
-    public String getNumeroCartao() {return numeroCartao;}
-    public void setNumeroCartao(String numeroCartao) {this.numeroCartao = numeroCartao;}
+}
